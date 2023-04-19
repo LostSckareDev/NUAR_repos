@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     public static int IsWinchester = 0;
     public Transform thompsonShotPoint;
     public Transform pistolShotPoint;
+    private float bonusTimeStart = 10f;
+    bool timerRunning = true;
+    public Pistol pistol;
     
     void Start()
     {
@@ -50,6 +53,32 @@ public class PlayerController : MonoBehaviour
         {
             Flip();
         }
+
+        if(IsThompson == 1)
+        {
+            if(timerRunning == true)
+            {
+                bonusTimeStart -= Time.deltaTime;
+            }
+            if(bonusTimeStart < 0)
+            {
+                IsThompson = 0;
+                bonusTimeStart = 10f;
+            }
+        }
+
+        if(IsWinchester == 1)
+        {
+            if(timerRunning == true)
+            {
+                bonusTimeStart -= Time.deltaTime;
+            }
+            if(bonusTimeStart < 0)
+            {
+                IsWinchester = 0;
+                bonusTimeStart = 10f;
+            }
+        }
     }
     
     void FixedUpdate()
@@ -63,6 +92,7 @@ public class PlayerController : MonoBehaviour
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
+        pistol.Flip();
     }
 
     public void ChangeHealth(int healthValue)
@@ -72,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("ThompsonBox"))
+        if(other.CompareTag("ThompsonBox") && IsWinchester != 1 && IsThompson != 1)
         {
             if (IsWinchester == 1)
             {
@@ -82,7 +112,7 @@ public class PlayerController : MonoBehaviour
             IsThompson++;
         }
 
-        else if (other.CompareTag("WinchesterBox"))
+        else if (other.CompareTag("WinchesterBox") && IsWinchester != 1 && IsThompson != 1)
         {
             if (IsThompson == 1)
             {

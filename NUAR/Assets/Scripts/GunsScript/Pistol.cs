@@ -104,7 +104,7 @@ public class Pistol : MonoBehaviour
         }
     }
 
-    private void Flip() //функция поворота пистолета 
+    public void Flip() //функция поворота пистолета 
     {
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;
