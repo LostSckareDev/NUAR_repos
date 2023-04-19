@@ -6,10 +6,13 @@ public class Pistol : MonoBehaviour
 {
     public float offset;
     public GameObject bullet; //объект пули
-    public Transform shotPoint; //точка, из которой вылетает пуля
+    public Transform shotPoint; //точка для пистолета, из которой вылетает пуля
+    public Transform shotPoint_T; //точка для Томпсона, из которой вылетает пуля
+    public Transform shotPoint_W; //точка для Томпсона, из которой вылетает пуля
     private float timeBtwShots; //время перезарядки пистолета 
     private float startTimeBtwShots = 0.5f; //начальное время перезарядки пистолета
-    private float startTimeBtwShots_T = 0.1f;
+    private float startTimeBtwShots_T = 0.1f; //начальное время перезарядки Томпсона
+    private float startTimeBtwShots_W = 1f; //начальное время перезарядки Винчествера
     private PlayerController player; //скрипт игрока
     private float rotZ;
     public Joystick joystick; //джойстик стрельбы
@@ -28,47 +31,28 @@ public class Pistol : MonoBehaviour
         }
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
 
-        if(PlayerController.IsThompson == 0)
+        if((timeBtwShots <= 0) && (Mathf.Abs(joystick.Horizontal) > 0.4f || Mathf.Abs(joystick.Vertical) > 0.4f)) //если время преезарядки кончилось и джойстик отклонён на 0.3 по всем осям, то произвести выстрел
         {
-            if((timeBtwShots <= 0) && (Mathf.Abs(joystick.Horizontal) > 0.4f || Mathf.Abs(joystick.Vertical) > 0.4f)) //если время преезарядки кончилось и джойстик отклонён на 0.3 по всем осям, то произвести выстрел
+            if(joystick.Vertical != 0 || joystick.Horizontal != 0)
             {
-                if(joystick.Vertical != 0 || joystick.Horizontal != 0)
-                {
-                    Shoot();
-                }
+                Shoot();
             }
-            else //иначе декрементировать переменную перезарядки 
-            {
-                timeBtwShots -= Time.deltaTime;
             }
-        }
-
-        else if(PlayerController.IsThompson == 1)
+        else //иначе декрементировать переменную перезарядки 
         {
-            if((timeBtwShots <= 0) && (Mathf.Abs(joystick.Horizontal) > 0.4f || Mathf.Abs(joystick.Vertical) > 0.4f)) //если время преезарядки кончилось и джойстик отклонён на 0.3 по всем осям, то произвести выстрел
-            {
-                if(joystick.Vertical != 0 || joystick.Horizontal != 0)
-                {
-                    Shoot();
-                }
-            }
-            else //иначе декрементировать переменную перезарядки 
-            {
-                timeBtwShots -= Time.deltaTime;
-            }
+            timeBtwShots -= Time.deltaTime;
         }
-
         
         //условие поворота пистолета если игрок смотрит в правую сторону
         if(Player.transform.localScale.x > 0)
         {
             if(!facingRight && joystick.Horizontal > 0)
             {
-            Flip();
+                Flip();
             }
             else if(facingRight && joystick.Horizontal < 0)
             {
-            Flip();
+                Flip();
             }
         }
         //условие поворота пистолета если игрок смотрит в левую сторону
@@ -76,27 +60,47 @@ public class Pistol : MonoBehaviour
         {
             if(facingRight && joystick.Horizontal > 0)
             {
-            Flip();
+                Flip();
             }
             else if(!facingRight && joystick.Horizontal < 0)
             {
-            Flip();
+                Flip();
             }
         }
     }
 
     public void Shoot() //функция стрельбы 
     {
-        if(PlayerController.IsThompson == 0)
+        if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 0)
         {
-        Instantiate(bullet, shotPoint.position, transform.rotation);
-        timeBtwShots = startTimeBtwShots;
+            Instantiate(bullet, shotPoint.position, transform.rotation);
+            timeBtwShots = startTimeBtwShots;
         }
 
-        else if(PlayerController.IsThompson == 1)
+        else if(PlayerController.IsThompson == 1 && PlayerController.IsWinchester == 0)
         {
-        Instantiate(bullet, shotPoint.position, transform.rotation);
-        timeBtwShots = startTimeBtwShots_T;
+            float angle = 10f; // Угол разброса
+            float randomAngle = Random.Range(-angle, angle); // Случайное значение угла
+
+            Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
+
+            Instantiate(bullet, shotPoint_T.position, bulletRotation);
+            timeBtwShots = startTimeBtwShots_T;
+        }
+
+        else if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 1)
+        {
+            
+            int WinBull = 5; 
+            while(WinBull > 0)
+            {
+                float angle = 20f;
+                float randomAngle = Random.Range(-angle, angle);
+                Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
+                Instantiate(bullet, shotPoint_W.position, bulletRotation);
+                WinBull--;
+            }
+            timeBtwShots = startTimeBtwShots_W;
         }
     }
 

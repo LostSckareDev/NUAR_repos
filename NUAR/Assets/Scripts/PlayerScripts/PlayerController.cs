@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     private bool facingRight = true;
     public float health;
     public static int IsThompson = 0;
-    
+    public static int IsWinchester = 0;
+    public Transform thompsonShotPoint;
+    public Transform pistolShotPoint;
     
     void Start()
     {
@@ -72,9 +74,22 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("ThompsonBox"))
         {
-            
+            if (IsWinchester == 1)
+            {
+                IsWinchester--;
+            }
             Destroy(other.gameObject);
             IsThompson++;
+        }
+
+        else if (other.CompareTag("WinchesterBox"))
+        {
+            if (IsThompson == 1)
+            {
+                IsThompson--;
+            }
+            Destroy(other.gameObject);
+            IsWinchester++;
         }
     }
 }
