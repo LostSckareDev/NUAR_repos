@@ -13,12 +13,15 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private bool facingRight = true;
     public float health;
+    private const float healthFull = 100f;
     public static int IsThompson = 0;
     public static int IsWinchester = 0;
+    private int IsSpeed = 0;
     public Transform thompsonShotPoint;
     public Transform pistolShotPoint;
     private float bonusTimeStart = 10f;
     bool timerRunning = true;
+    private float bonusTimeStartSpeed = 10f;
     public Pistol pistol;
     
     void Start()
@@ -79,6 +82,20 @@ public class PlayerController : MonoBehaviour
                 bonusTimeStart = 10f;
             }
         }
+
+        if(IsSpeed == 1)
+        {
+            if(timerRunning == true)
+            {
+                bonusTimeStart -= Time.deltaTime;
+            }
+            if(bonusTimeStart < 0)
+            {
+                IsSpeed = 0;
+                bonusTimeStart = 10f;
+                speedPlayer = speedPlayer - 5f;
+            }
+        }
     }
     
     void FixedUpdate()
@@ -102,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("ThompsonBox") && IsWinchester != 1 && IsThompson != 1)
+        if(other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
             if (IsWinchester == 1)
             {
@@ -112,7 +129,7 @@ public class PlayerController : MonoBehaviour
             IsThompson++;
         }
 
-        else if (other.CompareTag("WinchesterBox") && IsWinchester != 1 && IsThompson != 1)
+        else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
             if (IsThompson == 1)
             {
@@ -120,6 +137,34 @@ public class PlayerController : MonoBehaviour
             }
             Destroy(other.gameObject);
             IsWinchester++;
+        }
+
+        else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
+        {
+            if (IsSpeed == 1)
+            {
+                IsSpeed--;
+            }
+            Destroy(other.gameObject);
+            IsSpeed++;
+            speedPlayer = speedPlayer + 5f;
+        }
+
+        else if (other.CompareTag("HealthBox"))
+        {
+            if((health + 20f) < healthFull)
+            {
+                health += 20f;
+            }
+            else 
+            {
+                while(health < healthFull)
+                {
+                    health++;
+                }
+            }
+            Destroy(other.gameObject);
+            Debug.Log("Health: " + health);
         }
     }
 }

@@ -8,6 +8,8 @@ TagManager:
   - ThompsonBox
   - WinchesterBox
   - WallCollider
+  - SpeedBox
+  - HealthBox
   layers:
   - Default
   - TransparentFX
