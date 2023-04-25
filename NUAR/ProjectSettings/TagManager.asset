@@ -10,6 +10,7 @@ TagManager:
   - WallCollider
   - SpeedBox
   - HealthBox
+  - HealthText
   layers:
   - Default
   - TransparentFX

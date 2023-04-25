@@ -27284,8 +27284,8 @@ GameObject:
   - component: {fileID: 612448652}
   - component: {fileID: 612448651}
   m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
+  m_Name: TextHealth
+  m_TagString: HealthText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27330,7 +27330,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34268c4099de7dc48a77fd07a2147e64, type: 2}
   m_sharedMaterial: {fileID: -8377561250386900281, guid: 34268c4099de7dc48a77fd07a2147e64, type: 2}
@@ -29393,6 +29393,10 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 1509925752}
+    - target: {fileID: 6023673851442971162, guid: 18fcee6a47d0c844fb2b08c577d06119, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 612448651}
     - target: {fileID: 6751717797545967394, guid: 18fcee6a47d0c844fb2b08c577d06119, type: 3}
       propertyPath: joystick
       value: 

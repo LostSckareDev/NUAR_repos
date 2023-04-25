@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 //using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public Joystick joystick;
     private Animator anim;
     private bool facingRight = true;
-    public float health;
+    public int health;
+    public TextMeshProUGUI healthText;
     private const float healthFull = 100f;
     public static int IsThompson = 0;
     public static int IsWinchester = 0;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        healthText = GameObject.Find("TextHealth").GetComponent<TextMeshProUGUI>();
         Rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         QualitySettings.vSyncCount = 0;
@@ -36,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        healthText.text = health.ToString();
+
         moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
         moveVelosity = moveInput.normalized * speedPlayer;
 
@@ -152,9 +158,9 @@ public class PlayerController : MonoBehaviour
 
         else if (other.CompareTag("HealthBox"))
         {
-            if((health + 20f) < healthFull)
+            if((health + 20) < healthFull)
             {
-                health += 20f;
+                health += 20;
             }
             else 
             {
