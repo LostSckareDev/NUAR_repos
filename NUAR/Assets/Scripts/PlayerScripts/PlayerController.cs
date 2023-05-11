@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-//using Photon.Pun;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
+    PhotonView view;
+
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
     private Vector2 moveInput;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        view = GetComponent<PhotonView>();
         healthText = GameObject.Find("TextHealth").GetComponent<TextMeshProUGUI>();
         Rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -40,10 +43,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        healthText.text = health.ToString();
+        if (view.IsMine)
+        {
+            moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+            moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
+            transform.position += (Vector3)moveVelosity;
+        }
 
-        moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
-        moveVelosity = moveInput.normalized * speedPlayer;
+        healthText.text = health.ToString();
 
         if(moveInput.x == 0)
         {
@@ -127,30 +134,30 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsWinchester == 1)
-            {
-                IsWinchester--;
-            }
+            //if (IsWinchester == 1)
+            //{
+            //    IsWinchester--;
+            //}
             Destroy(other.gameObject);
             IsThompson++;
         }
 
         else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsThompson == 1)
-            {
-                IsThompson--;
-            }
+            //if (IsThompson == 1)
+            //{
+            //    IsThompson--;
+            //}
             Destroy(other.gameObject);
             IsWinchester++;
         }
 
         else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsSpeed == 1)
-            {
-                IsSpeed--;
-            }
+            // if (IsSpeed == 1)
+            // {
+            //     IsSpeed--;
+            //}
             Destroy(other.gameObject);
             IsSpeed++;
             speedPlayer = speedPlayer + 5f;
