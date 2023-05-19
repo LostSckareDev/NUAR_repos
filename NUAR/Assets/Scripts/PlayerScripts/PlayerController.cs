@@ -7,7 +7,11 @@ using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
+<<<<<<< HEAD
     public PhotonView view;
+=======
+    PhotonView view;
+>>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
 
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
@@ -43,9 +47,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
         moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
         if (view.IsMine)
+=======
+        if (view.IsMine)
+        {
+            moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+            moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
+            transform.position += (Vector3)moveVelosity;
+        }
+
+        healthText.text = health.ToString();
+
+        if(moveInput.x == 0)
+>>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
         {
             transform.position += (Vector3)moveVelosity;
             if (moveInput == Vector2.zero)
