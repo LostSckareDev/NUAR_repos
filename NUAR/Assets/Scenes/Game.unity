@@ -231,11 +231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreateIDField: {fileID: 0}
   FindIDField: {fileID: 0}
-<<<<<<< HEAD
   NickNameInput: {fileID: 0}
   Player: {fileID: 0}
-=======
->>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
 --- !u!4 &66844696
 Transform:
   m_ObjectHideFlags: 0
@@ -26920,11 +26917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcbdf5b1cf1311439bed1430bef977f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   Player: {fileID: 7623990349299421859, guid: 0745085ffbc131c4da1addd99b122339, type: 3}
-=======
-  player: {fileID: 0}
->>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
   speed: 4
   view: {fileID: 0}
 --- !u!114 &519420034
@@ -27496,16 +27489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c68257e42ba4a4ab53ef8e97cf3de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   Player: {fileID: 8338008375834379964, guid: 0745085ffbc131c4da1addd99b122339, type: 3}
   randomPosition: {x: 0, y: 0}
-=======
-  player: {fileID: 8338008375834379964, guid: 0745085ffbc131c4da1addd99b122339, type: 3}
-  minX: 0
-  minY: 0
-  maxX: 0
-  maxY: 0
->>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
 --- !u!4 &630505440
 Transform:
   m_ObjectHideFlags: 0

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-<<<<<<< HEAD
 public class SpawnPlayers : MonoBehaviourPunCallbacks
 {
     public GameObject Player;
@@ -34,18 +33,3 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
     }
 }
 
-=======
-public class SpawnPlayers : MonoBehaviour
-{
-    public GameObject player;
-    public float minX, minY, maxX, maxY;
-
-    void Start()
-    {
-        Vector2 randomPosition = new Vector2(Random.Range(minX, minY), Random.Range(maxX, maxY));
-        PhotonNetwork.Instantiate (player.name, randomPosition, Quaternion.identity);
-    }
-
-
-}
->>>>>>> db8bbfaa93b8fdb9ec480fa8e1612137b8589388
