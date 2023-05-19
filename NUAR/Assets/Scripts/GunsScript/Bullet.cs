@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +10,25 @@ public class Bullet : MonoBehaviour
     public float distance;
     public int damage;
     public LayerMask whatIsSolid;
+    public PhotonView view;
 
     private void Start()
     {
+        view = GetComponent<PhotonView>();
         Invoke("DestroyBullet", lifetimeBullet);
     }
 
     private void Update()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
-        if (hitInfo.collider != null)
+        if (view.IsMine)
         {
-            Destroy(gameObject);
+            RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
+            if (hitInfo.collider != null)
+            {
+                Destroy(gameObject);
+            }
+            transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
         }
-        transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
     }
 
     public void DestroyBullet()

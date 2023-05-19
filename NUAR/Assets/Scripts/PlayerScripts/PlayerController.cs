@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-//using Photon.Pun;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
+    public PhotonView view;
+
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
     private Vector2 moveInput;
@@ -29,39 +31,34 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        view = GetComponent<PhotonView>();
         healthText = GameObject.Find("TextHealth").GetComponent<TextMeshProUGUI>();
         Rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         joystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
-        Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
+        Camera.main.GetComponent<CameraFollow>().Player = gameObject.transform;
     }
 
     void Update()
     {
-        healthText.text = health.ToString();
-
         moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
-        moveVelosity = moveInput.normalized * speedPlayer;
+        moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
+        if (view.IsMine)
+        {
+            transform.position += (Vector3)moveVelosity;
+            if (moveInput == Vector2.zero)
+                anim.SetBool("IsWalk", false);
+            else
+                anim.SetBool("IsWalk", true);
+            if (!facingRight && moveInput.x < 0)
+                Flip();
+            else if (facingRight && moveInput.x > 0)
+                Flip();
+        }
 
-        if(moveInput.x == 0)
-        {
-            anim.SetBool("IsWalk", false);
-        }
-        else
-        {
-            anim.SetBool("IsWalk", true);
-        }
-
-        if(!facingRight && moveInput.x < 0)
-        {
-            Flip();
-        }
-        else if(facingRight && moveInput.x > 0)
-        {
-            Flip();
-        }
+        healthText.text = health.ToString();
 
         if(IsThompson == 1)
         {
@@ -106,16 +103,17 @@ public class PlayerController : MonoBehaviour
     
     void FixedUpdate()
     {
-        Rigidbody.MovePosition(Rigidbody.position + moveVelosity * Time.fixedDeltaTime);
+        if (view.IsMine)
+            Rigidbody.MovePosition(Rigidbody.position + moveVelosity * Time.fixedDeltaTime);
     }
 
     private void Flip()
     {
-        facingRight = !facingRight;
-        Vector3 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
-        pistol.Flip();
+            facingRight = !facingRight;
+            Vector3 Scaler = transform.localScale;
+            Scaler.x *= -1;
+            transform.localScale = Scaler;
+            pistol.Flip();
     }
 
     public void ChangeHealth(int healthValue)
@@ -127,30 +125,30 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsWinchester == 1)
-            {
-                IsWinchester--;
-            }
+            //if (IsWinchester == 1)
+            //{
+            //    IsWinchester--;
+            //}
             Destroy(other.gameObject);
             IsThompson++;
         }
 
         else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsThompson == 1)
-            {
-                IsThompson--;
-            }
+            //if (IsThompson == 1)
+            //{
+            //    IsThompson--;
+            //}
             Destroy(other.gameObject);
             IsWinchester++;
         }
 
         else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            if (IsSpeed == 1)
-            {
-                IsSpeed--;
-            }
+            // if (IsSpeed == 1)
+            // {
+            //     IsSpeed--;
+            //}
             Destroy(other.gameObject);
             IsSpeed++;
             speedPlayer = speedPlayer + 5f;

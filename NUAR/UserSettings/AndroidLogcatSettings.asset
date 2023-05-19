@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "RF8T10B0T9B",
+    "m_SelectedDeviceId": "UHFDU19C16001470",
     "m_SelectedPackage": {
-        "deviceId": "RF8T10B0T9B",
+        "deviceId": "UHFDU19C16001470",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 23312,
+        "processId": 18119,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -18,6 +18,12 @@
             "deviceId": "RF8T10B0T9B",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 23312,
+            "exited": false
+        },
+        {
+            "deviceId": "UHFDU19C16001470",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 18119,
             "exited": false
         }
     ],
