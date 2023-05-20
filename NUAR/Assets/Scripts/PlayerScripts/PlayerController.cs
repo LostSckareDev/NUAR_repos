@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         joystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
-        Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
+        if(view.Owner.IsLocal)
+            Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
     }
 
     void Update()
