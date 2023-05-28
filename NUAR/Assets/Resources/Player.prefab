@@ -522,6 +522,8 @@ MonoBehaviour:
   speedPlayer: 8
   health: 50
   healthText: {fileID: 0}
+  IsThompson: 0
+  IsWinchester: 0
   thompsonShotPoint: {fileID: 1520476303026137465}
   pistolShotPoint: {fileID: 1472358674187259776}
   pistol: {fileID: 2734759255850804945}
@@ -722,6 +724,7 @@ MonoBehaviour:
   shotPoint: {fileID: 1472358674187259776}
   shotPoint_T: {fileID: 1520476303026137465}
   shotPoint_W: {fileID: 5098405029838789600}
+  player: {fileID: 5772421729106791151}
   Player: {fileID: 0}
 --- !u!114 &289912000062272409
 MonoBehaviour:
@@ -738,6 +741,7 @@ MonoBehaviour:
   spritePistol: {fileID: 21300000, guid: 15d3ada36cbfbe54587c41196699cd52, type: 3}
   spriteThompson: {fileID: 21300000, guid: 3ea6c200e7c9cac499e489916ac64c22, type: 3}
   spriteWinchester: {fileID: 21300000, guid: fe318e26407dd694d96f7f4d243a6132, type: 3}
+  player: {fileID: 5772421729106791151}
 --- !u!1 &8716056937611954692
 GameObject:
   m_ObjectHideFlags: 0

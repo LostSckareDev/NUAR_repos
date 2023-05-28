@@ -15,7 +15,7 @@ public class Pistol : MonoBehaviour
     private float startTimeBtwShots = 0.5f; //начальное время перезарядки пистолета
     private float startTimeBtwShots_T = 0.1f; //начальное время перезарядки Томпсона
     private float startTimeBtwShots_W = 1f; //начальное время перезарядки Винчествера
-    private PlayerController player; //скрипт игрока
+    public PlayerController player; //скрипт игрока
     private float rotZ;
     private Joystick joystick; //джойстик стрельбы
     private bool facingRight = true; //переменная, определяющая сторону, в которую смотрит пистолет (если вправо, то true, влево - false)
@@ -77,13 +77,13 @@ public class Pistol : MonoBehaviour
 
     public void Shoot() //функция стрельбы 
     {
-        if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 0)
+        if(player.IsThompson == 0 && player.IsWinchester == 0)
         {
             Instantiate(bullet, shotPoint.position, transform.rotation);
             timeBtwShots = startTimeBtwShots;
         }
 
-        else if(PlayerController.IsThompson == 1 && PlayerController.IsWinchester == 0)
+        else if(player.IsThompson == 1 && player.IsWinchester == 0)
         {
             float angle = 10f; // Угол разброса
             float randomAngle = Random.Range(-angle, angle); // Случайное значение угла
@@ -94,7 +94,7 @@ public class Pistol : MonoBehaviour
             timeBtwShots = startTimeBtwShots_T;
         }
 
-        else if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 1)
+        else if(player.IsThompson == 0 && player.IsWinchester == 1)
         {
             
             int WinBull = 5; 

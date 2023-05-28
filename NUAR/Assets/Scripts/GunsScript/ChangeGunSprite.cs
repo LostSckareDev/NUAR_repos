@@ -8,22 +8,24 @@ public class ChangeGunSprite : MonoBehaviour
     public Sprite spriteThompson;
     public Sprite spriteWinchester;
     private SpriteRenderer spriteRenderer;
+    public PlayerController player;
     
     private void Start()
     {
+        //player = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
-        if(PlayerController.IsThompson == 1 && PlayerController.IsWinchester == 0)
+        if(player.IsThompson == 1 && player.IsWinchester == 0)
         {
             spriteRenderer.sprite = spriteThompson;
         }
-        else if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 1)
+        else if(player.IsThompson == 0 && player.IsWinchester == 1)
         {
             spriteRenderer.sprite = spriteWinchester;
         }
-        else if(PlayerController.IsThompson == 0 && PlayerController.IsWinchester == 0)
+        else if(player.IsThompson == 0 && player.IsWinchester == 0)
         {
             spriteRenderer.sprite = spritePistol;
         }

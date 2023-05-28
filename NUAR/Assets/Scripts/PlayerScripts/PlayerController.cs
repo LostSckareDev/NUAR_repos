@@ -21,15 +21,14 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI healthText;
     private const float healthFull = 100f;
 
-    public static int IsThompson = 0;
-    public static int IsWinchester = 0;
+    public int IsThompson = 0;
+    public int IsWinchester = 0;
     private int IsSpeed = 0;
 
     public Transform thompsonShotPoint;
     public Transform pistolShotPoint;
     private float bonusTimeStart = 10f;
     bool timerRunning = true;
-    private float bonusTimeStartSpeed = 10f;
     public Pistol pistol;
     
     void Start()
@@ -138,33 +137,24 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            //if (IsWinchester == 1)
-            //{
-            //    IsWinchester--;
-            //}
-            Destroy(other.gameObject);
-            IsThompson++;
+            if (view.IsMine)
+                IsThompson++;
         }
 
         else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            //if (IsThompson == 1)
-            //{
-            //    IsThompson--;
-            //}
-            Destroy(other.gameObject);
-            IsWinchester++;
+            if (view.IsMine)
+                IsWinchester++;
         }
 
         else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
         {
-            // if (IsSpeed == 1)
-            // {
-            //     IsSpeed--;
-            //}
-            Destroy(other.gameObject);
-            IsSpeed++;
-            speedPlayer = speedPlayer + 5f;
+
+            if (view.IsMine)
+            {
+                IsSpeed++;
+                speedPlayer = speedPlayer + 5f;
+            }
         }
 
         else if (other.CompareTag("HealthBox"))
@@ -180,8 +170,8 @@ public class PlayerController : MonoBehaviour
                     health++;
                 }
             }
-            Destroy(other.gameObject);
             Debug.Log("Health: " + health);
         }
+        Destroy(other.gameObject);
     }
 }
