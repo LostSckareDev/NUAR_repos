@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Pistol : MonoBehaviour
 {
+    PhotonView view;
     public float offset;
     public GameObject bullet; //объект пули
     public Transform shotPoint; //точка для пистолета, из которой вылетает пуля
@@ -15,13 +17,15 @@ public class Pistol : MonoBehaviour
     private float startTimeBtwShots_W = 1f; //начальное время перезарядки Винчествера
     private PlayerController player; //скрипт игрока
     private float rotZ;
-    public Joystick joystick; //джойстик стрельбы
+    private Joystick joystick; //джойстик стрельбы
     private bool facingRight = true; //переменная, определяющая сторону, в которую смотрит пистолет (если вправо, то true, влево - false)
     public GameObject Player; //объект игрока
 
     private void Start()
     {
-        
+        view = GetComponent<PhotonView>();
+        joystick = GameObject.FindGameObjectWithTag("JoystickGun").GetComponent<Joystick>();
+        Player = transform.parent.gameObject;
     }
     void Update()
     {
@@ -37,36 +41,38 @@ public class Pistol : MonoBehaviour
             {
                 Shoot();
             }
-            }
+        }
         else //иначе декрементировать переменную перезарядки 
         {
             timeBtwShots -= Time.deltaTime;
         }
-        
-        //условие поворота пистолета если игрок смотрит в правую сторону
-        if(Player.transform.localScale.x > 0)
-        {
-            if(!facingRight && joystick.Horizontal > 0)
+
+
+            //условие поворота пистолета если игрок смотрит в правую сторону
+            if (Player.transform.localScale.x > 0)
             {
-                Flip();
+                if (!facingRight && joystick.Horizontal > 0)
+                {
+                    Flip();
+                }
+                else if (facingRight && joystick.Horizontal < 0)
+                {
+                    Flip();
+                }
             }
-            else if(facingRight && joystick.Horizontal < 0)
+            //условие поворота пистолета если игрок смотрит в левую сторону
+            else if (Player.transform.localScale.x < 0)
             {
-                Flip();
+                if (facingRight && joystick.Horizontal > 0)
+                {
+                    Flip();
+                }
+                else if (!facingRight && joystick.Horizontal < 0)
+                {
+                    Flip();
+                }
+
             }
-        }
-        //условие поворота пистолета если игрок смотрит в левую сторону
-        else if(Player.transform.localScale.x < 0)
-        {
-            if(facingRight && joystick.Horizontal > 0)
-            {
-                Flip();
-            }
-            else if(!facingRight && joystick.Horizontal < 0)
-            {
-                Flip();
-            }
-        }
     }
 
     public void Shoot() //функция стрельбы 
@@ -97,6 +103,7 @@ public class Pistol : MonoBehaviour
                 float angle = 20f;
                 float randomAngle = Random.Range(-angle, angle);
                 Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
+
                 Instantiate(bullet, shotPoint_W.position, bulletRotation);
                 WinBull--;
             }

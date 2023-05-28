@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedBullet: 80
-  lifetimeBullet: 0.5
+  lifetimeBullet: 1
   distance: 0.5
   damage: 1
   whatIsSolid:

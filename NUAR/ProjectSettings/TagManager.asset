@@ -4,13 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Joystick
   - ThompsonBox
   - WinchesterBox
   - WallCollider
   - SpeedBox
   - HealthBox
   - HealthText
+  - JoystickGun
+  - JoystickWalk
   layers:
   - Default
   - TransparentFX

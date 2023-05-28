@@ -26790,6 +26790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fixed Joystick Shoot
       objectReference: {fileID: 0}
+    - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_TagString
+      value: JoystickGun
+      objectReference: {fileID: 0}
     - target: {fileID: 2929252285020698103, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -27153,7 +27157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_TagString
-      value: Joystick
+      value: JoystickWalk
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020698103, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Sprite
@@ -28103,6 +28107,14 @@ PrefabInstance:
     - target: {fileID: 2526639596642871660, guid: ab0e90d34b5d25b4c820fada444daed4, type: 3}
       propertyPath: m_Name
       value: Health_Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526639596642871660, guid: ab0e90d34b5d25b4c820fada444daed4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563426665556874176, guid: ab0e90d34b5d25b4c820fada444daed4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

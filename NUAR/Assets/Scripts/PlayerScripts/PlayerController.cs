@@ -13,15 +13,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D Rigidbody;
     private Vector2 moveInput;
     private Vector2 moveVelosity;
-    public Joystick joystick;
+    private Joystick joystick;
     private Animator anim;
     private bool facingRight = true;
+
     public int health;
     public TextMeshProUGUI healthText;
     private const float healthFull = 100f;
+
     public static int IsThompson = 0;
     public static int IsWinchester = 0;
     private int IsSpeed = 0;
+
     public Transform thompsonShotPoint;
     public Transform pistolShotPoint;
     private float bonusTimeStart = 10f;
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
-        joystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        joystick = GameObject.FindGameObjectWithTag("JoystickWalk").GetComponent<Joystick>();
         if(view.Owner.IsLocal)
             Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
     }
@@ -53,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         healthText.text = health.ToString();
 
-        if(moveInput.x == 0)
+        if (moveInput.x == 0)
         {
             anim.SetBool("IsWalk", false);
         }

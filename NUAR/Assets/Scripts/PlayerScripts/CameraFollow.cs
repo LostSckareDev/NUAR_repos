@@ -7,6 +7,10 @@ public class CameraFollow : MonoBehaviour
     public Transform player;
     private Vector3 playerVector;
     public int speed;
+    void Start()
+    {
+        player = transform;
+    }
     void Update()
     {
         playerVector = player.position;
