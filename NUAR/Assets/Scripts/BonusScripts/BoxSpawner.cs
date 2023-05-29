@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class BoxSpawner : MonoBehaviour
 {
-    public GameObject ThompsonBox;    //первый префаб объекта для спавна
-    public GameObject WinchesterBox; //второй префаб объекта для спавна
-    public GameObject SpeedBox; //третий префаб объекта для спавна
-    public GameObject HealthBox; //четвёртый префаб объекта для спавна
-    public float spawnDelay = 1f;       //задержка между спавнами
+    public float spawnDelay = 3f;       //задержка между спавнами
     public int maxSpawnCount = 10;      //максимальное количество объектов на сцене
     public float spawnAreaWidth = 10f;  //ширина прямоугольной зоны спавна
     public float spawnAreaHeight = 10f; //высота прямоугольной зоны спавна
@@ -55,19 +53,19 @@ public class BoxSpawner : MonoBehaviour
                 switch(randomIndex)
                 {
                     case 0:
-                        obj = Instantiate(ThompsonBox, spawnPoint, Quaternion.identity);
+                        obj = PhotonNetwork.Instantiate("Thompson_Box", spawnPoint, Quaternion.identity);
                         break;
                     case 1:
-                        obj = Instantiate(WinchesterBox, spawnPoint, Quaternion.identity);
+                        obj = PhotonNetwork.Instantiate("Winchester_Box", spawnPoint, Quaternion.identity);
                         break;
                     case 2:
-                        obj = Instantiate(SpeedBox, spawnPoint, Quaternion.identity);
+                        obj = PhotonNetwork.Instantiate("Speed_Box", spawnPoint, Quaternion.identity);
                         break;
                     case 3:
-                        obj = Instantiate(HealthBox, spawnPoint, Quaternion.identity);
+                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
                         break;
                     default:
-                        obj = Instantiate(HealthBox, spawnPoint, Quaternion.identity);
+                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
                         break;
                 }
                 spawnedObjects.Add(obj);

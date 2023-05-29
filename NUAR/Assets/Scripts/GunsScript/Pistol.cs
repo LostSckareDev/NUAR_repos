@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class Pistol : MonoBehaviour
 {
-    PhotonView view;
     public float offset;
     public GameObject bullet; //объект пули
     public Transform shotPoint; //точка для пистолета, из которой вылетает пуля
@@ -23,29 +23,31 @@ public class Pistol : MonoBehaviour
 
     private void Start()
     {
-        view = GetComponent<PhotonView>();
         joystick = GameObject.FindGameObjectWithTag("JoystickGun").GetComponent<Joystick>();
         Player = transform.parent.gameObject;
     }
     void Update()
     {
-        if (Mathf.Abs(joystick.Horizontal) > 0.1f || Mathf.Abs(joystick.Vertical) > 0.1f) //если джойстик отклонён на 0.3 по всем осям 
+        if (player.view.IsMine)
         {
-            rotZ = Mathf.Atan2(joystick.Vertical, joystick.Horizontal) * Mathf.Rad2Deg; //поворот пистолета относительно джойстика
-        }
-        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
-
-        if((timeBtwShots <= 0) && (Mathf.Abs(joystick.Horizontal) > 0.4f || Mathf.Abs(joystick.Vertical) > 0.4f)) //если время преезарядки кончилось и джойстик отклонён на 0.3 по всем осям, то произвести выстрел
-        {
-            if(joystick.Vertical != 0 || joystick.Horizontal != 0)
+            if (Mathf.Abs(joystick.Horizontal) > 0.1f || Mathf.Abs(joystick.Vertical) > 0.1f) //если джойстик отклонён на 0.3 по всем осям 
             {
-                Shoot();
+                rotZ = Mathf.Atan2(joystick.Vertical, joystick.Horizontal) * Mathf.Rad2Deg; //поворот пистолета относительно джойстика
             }
-        }
-        else //иначе декрементировать переменную перезарядки 
-        {
-            timeBtwShots -= Time.deltaTime;
-        }
+            transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
+
+            if ((timeBtwShots <= 0) && (Mathf.Abs(joystick.Horizontal) > 0.4f || Mathf.Abs(joystick.Vertical) > 0.4f)) //если время преезарядки кончилось и джойстик отклонён на 0.3 по всем осям, то произвести выстрел
+            {
+                if (joystick.Vertical != 0 || joystick.Horizontal != 0)
+                {
+                    Shoot();
+                }
+            }
+
+            else //иначе декрементировать переменную перезарядки 
+            {
+                timeBtwShots -= Time.deltaTime;
+            }
 
 
             //условие поворота пистолета если игрок смотрит в правую сторону
@@ -73,13 +75,15 @@ public class Pistol : MonoBehaviour
                 }
 
             }
+
+        }
     }
 
     public void Shoot() //функция стрельбы 
     {
         if(player.IsThompson == 0 && player.IsWinchester == 0)
         {
-            Instantiate(bullet, shotPoint.position, transform.rotation);
+            PhotonNetwork.Instantiate("Bullet", shotPoint.position, transform.rotation);
             timeBtwShots = startTimeBtwShots;
         }
 
@@ -90,7 +94,7 @@ public class Pistol : MonoBehaviour
 
             Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
 
-            Instantiate(bullet, shotPoint_T.position, bulletRotation);
+            PhotonNetwork.Instantiate("Bullet", shotPoint_T.position, bulletRotation);
             timeBtwShots = startTimeBtwShots_T;
         }
 
@@ -104,7 +108,7 @@ public class Pistol : MonoBehaviour
                 float randomAngle = Random.Range(-angle, angle);
                 Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
 
-                Instantiate(bullet, shotPoint_W.position, bulletRotation);
+                PhotonNetwork.Instantiate("Bullet", shotPoint_W.position, bulletRotation);
                 WinBull--;
             }
             timeBtwShots = startTimeBtwShots_W;

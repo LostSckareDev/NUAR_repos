@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour
 {
-    PhotonView view;
+    internal PhotonView view;
+    public ChangeGunSprite GunSprite;
 
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool facingRight = true;
 
     public int health;
-    public TextMeshProUGUI healthText;
+    private TextMeshProUGUI healthText;
     private const float healthFull = 100f;
 
     public int IsThompson = 0;
@@ -27,13 +29,14 @@ public class PlayerController : MonoBehaviour
 
     public Transform thompsonShotPoint;
     public Transform pistolShotPoint;
-    private float bonusTimeStart = 10f;
+    internal float bonusTimeStart = 10f;
     bool timerRunning = true;
     public Pistol pistol;
     
     void Start()
     {
         view = GetComponent<PhotonView>();
+
         healthText = GameObject.Find("TextHealth").GetComponent<TextMeshProUGUI>();
         Rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -51,67 +54,75 @@ public class PlayerController : MonoBehaviour
             moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
             moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
             transform.position += (Vector3)moveVelosity;
-        }
 
-        healthText.text = health.ToString();
+            healthText.text = health.ToString();
 
-        if (moveInput.x == 0)
-        {
-            anim.SetBool("IsWalk", false);
-        }
-        else
-        {
-            anim.SetBool("IsWalk", true);
-        }
-
-        if(!facingRight && moveInput.x < 0)
-        {
-            Flip();
-        }
-        else if(facingRight && moveInput.x > 0)
-        {
-            Flip();
-        }
-
-        if(IsThompson == 1)
-        {
-            if(timerRunning == true)
+            if (moveInput.x == 0)
             {
-                bonusTimeStart -= Time.deltaTime;
+                anim.SetBool("IsWalk", false);
             }
-            if(bonusTimeStart < 0)
+            else
             {
-                IsThompson = 0;
-                bonusTimeStart = 10f;
+                anim.SetBool("IsWalk", true);
             }
         }
+            if (!facingRight && moveInput.x < 0)
+            {
+                Flip();
+            }
+            else if (facingRight && moveInput.x > 0)
+            {
+                Flip();
+            }
 
-        if(IsWinchester == 1)
-        {
-            if(timerRunning == true)
+            if (IsThompson == 1)
             {
-                bonusTimeStart -= Time.deltaTime;
+                
+                if (GunSprite.spriteRenderer.sprite != GunSprite.spriteThompson)
+                    view.RPC("GunSprite.ChangeSprite", RpcTarget.AllBufferedViaServer);
+            if (timerRunning == true)
+                {
+                    bonusTimeStart -= Time.deltaTime;
+                }
+                if (bonusTimeStart < 0)
+                {
+                    IsThompson = 0;
+                    bonusTimeStart = 10f;
+                }
             }
-            if(bonusTimeStart < 0)
-            {
-                IsWinchester = 0;
-                bonusTimeStart = 10f;
-            }
-        }
 
-        if(IsSpeed == 1)
-        {
-            if(timerRunning == true)
+            if (IsWinchester == 1)
             {
-                bonusTimeStart -= Time.deltaTime;
+                if (GunSprite.spriteRenderer.sprite != GunSprite.spriteThompson)
+                {
+                    if(view.IsMine)
+                    view.RPC("GunSprite.ChangeSprite", RpcTarget.AllBufferedViaServer);
+                }
+                if (timerRunning == true)
+                {
+                    bonusTimeStart -= Time.deltaTime;
+                }
+                if (bonusTimeStart < 0)
+                {
+                    IsWinchester = 0;
+                    bonusTimeStart = 10f;
+                }
             }
-            if(bonusTimeStart < 0)
+
+            if (IsSpeed == 1)
             {
-                IsSpeed = 0;
-                bonusTimeStart = 10f;
-                speedPlayer = speedPlayer - 5f;
+                if (timerRunning == true)
+                {
+                    bonusTimeStart -= Time.deltaTime;
+                }
+                if (bonusTimeStart < 0)
+                {
+                    IsSpeed = 0;
+                    bonusTimeStart = 10f;
+                    speedPlayer = speedPlayer - 5f;
+                }
             }
-        }
+        
     }
     
     void FixedUpdate()
@@ -130,48 +141,61 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeHealth(int healthValue)
     {
-        health += healthValue;
+        health -= healthValue;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
+        //if (view.IsMine)
         {
-            if (view.IsMine)
-                IsThompson++;
-        }
-
-        else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
-        {
-            if (view.IsMine)
-                IsWinchester++;
-        }
-
-        else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
-        {
-
-            if (view.IsMine)
+            if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 || other.CompareTag("HealthBox"))
             {
-                IsSpeed++;
-                speedPlayer = speedPlayer + 5f;
+                if (view.IsMine)
+                    Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
             }
-        }
-
-        else if (other.CompareTag("HealthBox"))
-        {
-            if((health + 20) < healthFull)
+            if (view.IsMine)
             {
-                health += 20;
-            }
-            else 
-            {
-                while(health < healthFull)
+                if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
-                    health++;
+                    //if (view.IsMine)
+                        IsThompson++;
+                }
+
+                else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
+                {
+                    //if (view.IsMine)
+                        IsWinchester++;
+                }
+
+                else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
+                {
+                    //if (view.IsMine)
+                    {
+                        IsSpeed++;
+                        speedPlayer = speedPlayer + 5f;
+                    }
+                }
+
+                else if (other.CompareTag("HealthBox"))
+                {
+                    //if (view.IsMine)
+                    {
+                        if ((health + 20) < healthFull)
+                        {
+                            health += 20;
+                        }
+                        else
+                        {
+                            while (health < healthFull)
+                            {
+                                health++;
+                            }
+                        }
+                        Debug.Log("Health: " + health);
+                    }
                 }
             }
-            Debug.Log("Health: " + health);
         }
-        Destroy(other.gameObject);
     }
 }

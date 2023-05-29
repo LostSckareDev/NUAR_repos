@@ -1,33 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class ChangeGunSprite : MonoBehaviour
 {
     public Sprite spritePistol;
     public Sprite spriteThompson;
     public Sprite spriteWinchester;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     public PlayerController player;
-    
+    internal char Gun;
+
     private void Start()
     {
-        //player = GetComponent<PlayerController>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = this.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
     }
-    private void Update()
+    [PunRPC]
+    internal void ChangeSprite()
     {
-        if(player.IsThompson == 1 && player.IsWinchester == 0)
-        {
+        if (player.IsThompson == 1)
             spriteRenderer.sprite = spriteThompson;
-        }
-        else if(player.IsThompson == 0 && player.IsWinchester == 1)
-        {
+        else if(player.IsWinchester == 1)
             spriteRenderer.sprite = spriteWinchester;
-        }
-        else if(player.IsThompson == 0 && player.IsWinchester == 0)
-        {
+        else
             spriteRenderer.sprite = spritePistol;
+        while (true)
+        {
+            if (player.bonusTimeStart < 0)
+            {
+                ChangeSprite();
+                break;
+            }
         }
     }
 
