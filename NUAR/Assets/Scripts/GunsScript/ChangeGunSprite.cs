@@ -11,29 +11,66 @@ public class ChangeGunSprite : MonoBehaviour
     public Sprite spriteWinchester;
     public SpriteRenderer spriteRenderer;
     public PlayerController player;
-    internal char Gun;
+    public string Gun;
+    internal float bonusTimeStart = 10f;
+    bool timerRunning = true;
+    internal PhotonView view;
 
     private void Start()
     {
-        spriteRenderer = this.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
+        view = GetComponent<PhotonView>();
     }
-    [PunRPC]
-    internal void ChangeSprite()
+
+    private void Update()
     {
         if (player.IsThompson == 1)
+        {
+            Gun = "T";
+            if (spriteRenderer.sprite != spriteThompson)
+                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+            if (timerRunning == true)
+            {
+                bonusTimeStart -= Time.deltaTime;
+            }
+            if (bonusTimeStart < 0)
+            {
+                Gun = "P";
+                player.IsThompson = 0;
+                bonusTimeStart = 10f;
+                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+            }
+        }
+
+        if (player.IsWinchester == 1)
+        {
+            Gun = "W";
+            if (spriteRenderer.sprite != spriteWinchester)
+            {
+                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+            }
+            if (timerRunning == true)
+            {
+                bonusTimeStart -= Time.deltaTime;
+            }
+            if (bonusTimeStart < 0)
+            {
+                Gun = "P";
+                player.IsWinchester = 0;
+                bonusTimeStart = 10f;
+                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void ChangeSprite(string a)
+    {
+        if (a == "T")
             spriteRenderer.sprite = spriteThompson;
-        else if(player.IsWinchester == 1)
+        else if(a == "W")
             spriteRenderer.sprite = spriteWinchester;
         else
             spriteRenderer.sprite = spritePistol;
-        while (true)
-        {
-            if (player.bonusTimeStart < 0)
-            {
-                ChangeSprite();
-                break;
-            }
-        }
     }
 
 }

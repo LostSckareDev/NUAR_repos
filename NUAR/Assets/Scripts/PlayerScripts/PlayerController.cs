@@ -9,7 +9,7 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour
 {
     internal PhotonView view;
-    public ChangeGunSprite GunSprite;
+    //public ChangeGunSprite GunSprite;
 
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
@@ -49,13 +49,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+            healthText.text = health.ToString();
         if (view.IsMine)
         {
             moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
             moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
             transform.position += (Vector3)moveVelosity;
 
-            healthText.text = health.ToString();
+            //healthText.text = health.ToString();
 
             if (moveInput.x == 0)
             {
@@ -75,40 +76,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
 
-            if (IsThompson == 1)
-            {
-                
-                if (GunSprite.spriteRenderer.sprite != GunSprite.spriteThompson)
-                    view.RPC("GunSprite.ChangeSprite", RpcTarget.AllBufferedViaServer);
-            if (timerRunning == true)
-                {
-                    bonusTimeStart -= Time.deltaTime;
-                }
-                if (bonusTimeStart < 0)
-                {
-                    IsThompson = 0;
-                    bonusTimeStart = 10f;
-                }
-            }
-
-            if (IsWinchester == 1)
-            {
-                if (GunSprite.spriteRenderer.sprite != GunSprite.spriteThompson)
-                {
-                    if(view.IsMine)
-                    view.RPC("GunSprite.ChangeSprite", RpcTarget.AllBufferedViaServer);
-                }
-                if (timerRunning == true)
-                {
-                    bonusTimeStart -= Time.deltaTime;
-                }
-                if (bonusTimeStart < 0)
-                {
-                    IsWinchester = 0;
-                    bonusTimeStart = 10f;
-                }
-            }
-
+           
             if (IsSpeed == 1)
             {
                 if (timerRunning == true)
@@ -146,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if (view.IsMine)
         {
             if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 || other.CompareTag("HealthBox"))
             {
@@ -158,19 +125,16 @@ public class PlayerController : MonoBehaviour
             {
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
-                    //if (view.IsMine)
                         IsThompson++;
                 }
 
                 else if (other.CompareTag("WinchesterBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
-                    //if (view.IsMine)
                         IsWinchester++;
                 }
 
                 else if (other.CompareTag("SpeedBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
-                    //if (view.IsMine)
                     {
                         IsSpeed++;
                         speedPlayer = speedPlayer + 5f;
@@ -179,7 +143,6 @@ public class PlayerController : MonoBehaviour
 
                 else if (other.CompareTag("HealthBox"))
                 {
-                    //if (view.IsMine)
                     {
                         if ((health + 20) < healthFull)
                         {

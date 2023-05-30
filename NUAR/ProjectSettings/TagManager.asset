@@ -12,6 +12,7 @@ TagManager:
   - HealthText
   - JoystickGun
   - JoystickWalk
+  - Bullet
   layers:
   - Default
   - TransparentFX

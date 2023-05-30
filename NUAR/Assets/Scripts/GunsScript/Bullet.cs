@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     public float distance;
     public int damage;
     public LayerMask whatIsSolid;
+    private PlayerController player;
 
     private void Start()
     {
@@ -36,6 +37,11 @@ public class Bullet : MonoBehaviour
         if(other.CompareTag("WallCollider"))
         {
             DestroyBullet();
+        }
+        if(other.CompareTag("Player"))
+        {
+            DestroyBullet();
+            player.ChangeHealth(5);
         }
     }
 }

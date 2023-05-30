@@ -365,7 +365,6 @@ GameObject:
   - component: {fileID: 5133681927596415902}
   - component: {fileID: 7066731213796317738}
   - component: {fileID: 2013729147037246387}
-  - component: {fileID: 8840426372271420118}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -522,7 +521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e25fa8f7738e846bc277af01480f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunSprite: {fileID: 289912000062272409}
   speedPlayer: 6
   health: 50
   IsThompson: 0
@@ -643,23 +641,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
---- !u!114 &8840426372271420118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8338008375834379964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3315e82b50bfa64b8c507311e9b03a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spritePistol: {fileID: 21300000, guid: 15d3ada36cbfbe54587c41196699cd52, type: 3}
-  spriteThompson: {fileID: 21300000, guid: 3ea6c200e7c9cac499e489916ac64c22, type: 3}
-  spriteWinchester: {fileID: 21300000, guid: fe318e26407dd694d96f7f4d243a6132, type: 3}
-  spriteRenderer: {fileID: 302060852484456751}
-  player: {fileID: 5772421729106791151}
 --- !u!1 &8578889434103983971
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +739,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8578889434103983971}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3315e82b50bfa64b8c507311e9b03a0, type: 3}
   m_Name: 
@@ -768,6 +749,7 @@ MonoBehaviour:
   spriteWinchester: {fileID: 21300000, guid: fe318e26407dd694d96f7f4d243a6132, type: 3}
   spriteRenderer: {fileID: 4687028701329047495}
   player: {fileID: 5772421729106791151}
+  Gun: 
 --- !u!114 &2734759255850804945
 MonoBehaviour:
   m_ObjectHideFlags: 0
