@@ -27604,6 +27604,10 @@ MonoBehaviour:
   maxSpawnCount: 10
   spawnAreaWidth: 50
   spawnAreaHeight: 35
+  HealthBox: {fileID: 2526639596642871660, guid: ab0e90d34b5d25b4c820fada444daed4, type: 3}
+  ThompsonBox: {fileID: 6463677204402151079, guid: d5422aef20a236040b5b1dbee47d992f, type: 3}
+  WinchesterBox: {fileID: 5577581294177449182, guid: df3f2697f44a5134d93b9e65b794c231, type: 3}
+  SpeedBox: {fileID: 7964994161349215336, guid: b1b9291896fee2e4f9cdc32c0d42b1a3, type: 3}
 --- !u!4 &711406195
 Transform:
   m_ObjectHideFlags: 0
@@ -27651,7 +27655,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 1

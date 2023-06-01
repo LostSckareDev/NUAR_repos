@@ -11,6 +11,10 @@ public class BoxSpawner : MonoBehaviour
     public int maxSpawnCount = 10;      //максимальное количество объектов на сцене
     public float spawnAreaWidth = 10f;  //ширина прямоугольной зоны спавна
     public float spawnAreaHeight = 10f; //высота прямоугольной зоны спавна
+    public GameObject HealthBox;
+    public GameObject ThompsonBox;
+    public GameObject WinchesterBox;
+    public GameObject SpeedBox;
 
     GameObject obj;
     private int currentSpawnCount = 0;  //текущее количество объектов на сцене
@@ -76,19 +80,19 @@ public class BoxSpawner : MonoBehaviour
         switch (number)
         {
             case 0:
-                obj = PhotonNetwork.Instantiate("Thompson_Box", Point, Quaternion.identity);
+                obj = Instantiate(ThompsonBox, Point, Quaternion.identity);
                 break;
             case 1:
-                obj = PhotonNetwork.Instantiate("Winchester_Box", Point, Quaternion.identity);
+                obj = Instantiate(WinchesterBox, Point, Quaternion.identity);
                 break;
             case 2:
-                obj = PhotonNetwork.Instantiate("Speed_Box", Point, Quaternion.identity);
+                obj = Instantiate(SpeedBox, Point, Quaternion.identity);
                 break;
             case 3:
-                obj = PhotonNetwork.Instantiate("Health_Box", Point, Quaternion.identity);
+                obj = Instantiate(HealthBox, Point, Quaternion.identity);
                 break;
             default:
-                obj = PhotonNetwork.Instantiate("Health_Box", Point, Quaternion.identity);
+                obj = Instantiate(HealthBox, Point, Quaternion.identity);
                 break;
         }     
         spawnedObjects.Add(obj);

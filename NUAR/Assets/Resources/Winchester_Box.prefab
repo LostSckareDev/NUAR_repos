@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6700947113271698431}
   - component: {fileID: 5486482907058363323}
   - component: {fileID: -8805048736824227711}
+  - component: {fileID: 8588454582135702964}
   m_Layer: 0
   m_Name: Winchester_Box
   m_TagString: WinchesterBox
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6700947113271698431
 SpriteRenderer:
@@ -153,3 +154,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8588454582135702964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577581294177449182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1690a63100c1b464688ed37bc5e3e8e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

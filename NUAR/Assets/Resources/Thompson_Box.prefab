@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4187948081809120457}
   - component: {fileID: 6435342131173177421}
   - component: {fileID: -4820512277542124998}
+  - component: {fileID: 8581359301940983229}
   m_Layer: 0
   m_Name: Thompson_Box
   m_TagString: ThompsonBox
@@ -153,3 +154,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8581359301940983229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463677204402151079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1690a63100c1b464688ed37bc5e3e8e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
