@@ -26,6 +26,15 @@ public class BoxSpawner : MonoBehaviour
     {
         while (true)
         {
+            //удаляем объекты из списка спавнутых объектов, если они уничтожены
+            for (int i = currentSpawnCount - 1; i >= 0; i--)
+            {
+                if (spawnedObjects[i] == null)
+                {
+                    spawnedObjects.RemoveAt(i);
+                    currentSpawnCount--;
+                }
+            }
             //проверяем, не достигнуто ли максимальное количество объектов на сцене
             if (currentSpawnCount >= maxSpawnCount)
             {
@@ -53,7 +62,6 @@ public class BoxSpawner : MonoBehaviour
                 //спавним объект и добавляем его в список спавнутых объектов
                 int randomIndex = Random.Range(0, 4);
                 view.RPC("Spawn", RpcTarget.AllBufferedViaServer, randomIndex, spawnPoint);
-                spawnedObjects.Add(obj);
                 currentSpawnCount++;
             }
 
@@ -88,14 +96,6 @@ public class BoxSpawner : MonoBehaviour
 
     private void Update()
     {
-        //удаляем объекты из списка спавнутых объектов, если они уничтожены
-        for (int i = currentSpawnCount - 1; i >= 0; i--)
-        {
-            if (spawnedObjects[i] == null)
-            {
-                spawnedObjects.RemoveAt(i);
-                currentSpawnCount--;
-            }
-        }
+        
     }
 }

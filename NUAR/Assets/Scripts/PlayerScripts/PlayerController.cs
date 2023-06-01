@@ -114,11 +114,13 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         {
+            /*if(other.CompareTag("HealthBox"))
+                other.gameObject.SetActive(false);*/
             if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 && !other.CompareTag("Bullet") || other.CompareTag("HealthBox"))
             {
                 /*if (view.IsMine)
                     Destroy(other.gameObject);*/
-                PhotonNetwork.Destroy(other.gameObject);
+                Destroy(other.gameObject);
             }
             if (view.IsMine)
             {
