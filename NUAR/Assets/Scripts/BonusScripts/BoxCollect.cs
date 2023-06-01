@@ -6,7 +6,6 @@ using Photon.Realtime;
 
 public class BoxCollect : MonoBehaviour
 {
-    PlayerController property;
     void Start()
     {
         
@@ -16,9 +15,7 @@ public class BoxCollect : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            property = other.GetComponent<PlayerController>();
-            if (property.IsSpeed != 1 && property.IsWinchester != 1 && property.IsThompson != 1 && property.view.IsMine)
-                Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

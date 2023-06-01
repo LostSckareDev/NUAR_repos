@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class BoxSpawner : MonoBehaviour
 {
     PhotonView view;
-    public float spawnDelay = 3f;       //задержка между спавнами
+    float spawnDelay = 5f;       //задержка между спавнами
     public int maxSpawnCount = 10;      //максимальное количество объектов на сцене
     public float spawnAreaWidth = 10f;  //ширина прямоугольной зоны спавна
     public float spawnAreaHeight = 10f; //высота прямоугольной зоны спавна
@@ -47,7 +47,7 @@ public class BoxSpawner : MonoBehaviour
             }
 
             //генерируем случайную точку в пределах прямоугольной зоны спавна
-            Vector2 spawnPoint = new Vector2(Random.Range(transform.position.x - spawnAreaWidth / 2, transform.position.x + spawnAreaWidth / 2), Random.Range(transform.position.y - spawnAreaHeight / 2, transform.position.y + spawnAreaHeight / 2));
+            Vector2 spawnPoint = new Vector2(Random.Range(-37f, 41f), Random.Range(-22f, 26f));
 
             // проверяем, не попадает ли точка спавна на стены
             Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPoint, 0.5f);

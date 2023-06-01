@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-            //healthText.text = health.ToString();
         if (view.IsMine)
         {
             moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
@@ -109,6 +108,33 @@ public class PlayerController : MonoBehaviour
     public void ChangeHealth(int healthValue)
     {
         health -= healthValue;
+        if (health <= 0)
+        {
+            while (true)
+            {
+                Vector2 spawnPoint = new Vector2(Random.Range(-37f, 41f), Random.Range(-22f, 26f));
+
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPoint, 0.5f);
+
+                bool canSpawn = true;
+
+                foreach (Collider2D col in colliders)
+                {
+                    if (col.CompareTag("WallCollider") || col.CompareTag("ThompsonBox") || col.CompareTag("WinchesterBox") || col.CompareTag("SpeedBox") || col.CompareTag("HealthBox") || col.CompareTag("Player"))    
+                        canSpawn = false;
+                }
+
+                if (canSpawn)
+                {
+                    transform.position = spawnPoint;
+                    health = 100;
+                    IsSpeed = 0;
+                    IsThompson = 0;
+                    IsWinchester = 0;
+                    break;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

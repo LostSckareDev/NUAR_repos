@@ -521,6 +521,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e25fa8f7738e846bc277af01480f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnAreaWidth: 10
+  spawnAreaHeight: 10
   speedPlayer: 6
   health: 50
   IsThompson: 0
@@ -721,7 +723,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 15d3ada36cbfbe54587c41196699cd52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

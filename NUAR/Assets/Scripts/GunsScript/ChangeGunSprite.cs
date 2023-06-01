@@ -23,41 +23,53 @@ public class ChangeGunSprite : MonoBehaviour
 
     private void Update()
     {
-        if (player.IsThompson == 1)
+        if (view.IsMine)
         {
-            Gun = "T";
-            if (spriteRenderer.sprite != spriteThompson)
-                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
-            if (timerRunning == true)
+            if (player.IsThompson == 1)
             {
-                bonusTimeStart -= Time.deltaTime;
+                Gun = "T";
+                if (spriteRenderer.sprite != spriteThompson)
+                    view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                if (timerRunning == true)
+                {
+                    bonusTimeStart -= Time.deltaTime;
+                }
+                if (bonusTimeStart < 0)
+                {
+                    Gun = "P";
+                    player.IsThompson = 0;
+                    bonusTimeStart = 10f;
+                    view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                }
             }
-            if (bonusTimeStart < 0)
-            {
-                Gun = "P";
-                player.IsThompson = 0;
-                bonusTimeStart = 10f;
-                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
-            }
-        }
 
-        if (player.IsWinchester == 1)
-        {
-            Gun = "W";
-            if (spriteRenderer.sprite != spriteWinchester)
+            else if (player.IsWinchester == 1)
             {
-                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                Gun = "W";
+                if (spriteRenderer.sprite != spriteWinchester)
+                {
+                    view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                }
+                if (timerRunning == true)
+                {
+                    bonusTimeStart -= Time.deltaTime;
+                }
+                if (bonusTimeStart < 0)
+                {
+                    Gun = "P";
+                    player.IsWinchester = 0;
+                    bonusTimeStart = 10f;
+                    view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                }
             }
-            if (timerRunning == true)
-            {
-                bonusTimeStart -= Time.deltaTime;
-            }
-            if (bonusTimeStart < 0)
+            else
             {
                 Gun = "P";
-                player.IsWinchester = 0;
-                bonusTimeStart = 10f;
-                view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                if (spriteRenderer.sprite != spritePistol)
+                {
+                    view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
+                }
+
             }
         }
     }
@@ -69,7 +81,7 @@ public class ChangeGunSprite : MonoBehaviour
             spriteRenderer.sprite = spriteThompson;
         else if(a == "W")
             spriteRenderer.sprite = spriteWinchester;
-        else
+        else 
             spriteRenderer.sprite = spritePistol;
     }
 
