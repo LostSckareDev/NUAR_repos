@@ -6,16 +6,19 @@ using Photon.Realtime;
 
 public class BoxSpawner : MonoBehaviour
 {
+    PhotonView view;
     public float spawnDelay = 3f;       //задержка между спавнами
     public int maxSpawnCount = 10;      //максимальное количество объектов на сцене
     public float spawnAreaWidth = 10f;  //ширина прямоугольной зоны спавна
     public float spawnAreaHeight = 10f; //высота прямоугольной зоны спавна
 
+    GameObject obj;
     private int currentSpawnCount = 0;  //текущее количество объектов на сцене
     private List<GameObject> spawnedObjects = new List<GameObject>(); //список спавнутых объектов
 
     private void Start()
     {
+        view = GetComponent<PhotonView>();
         StartCoroutine(SpawnCoroutine());
     }
 
@@ -38,7 +41,7 @@ public class BoxSpawner : MonoBehaviour
             bool canSpawn = true;
             foreach (Collider2D col in colliders)
             {
-                if (col.CompareTag("WallCollider") || col.CompareTag("ThompsonBox") || col.CompareTag("WinchesterBox") || col.CompareTag("SpeedBox") || col.CompareTag("HealthBox"))
+                if (col.CompareTag("WallCollider") || col.CompareTag("ThompsonBox") || col.CompareTag("WinchesterBox") || col.CompareTag("SpeedBox") || col.CompareTag("HealthBox") || col.CompareTag("Player"))
                 {
                     canSpawn = false;
                     break;
@@ -49,25 +52,7 @@ public class BoxSpawner : MonoBehaviour
             {
                 //спавним объект и добавляем его в список спавнутых объектов
                 int randomIndex = Random.Range(0, 4);
-                GameObject obj;
-                switch(randomIndex)
-                {
-                    case 0:
-                        obj = PhotonNetwork.Instantiate("Thompson_Box", spawnPoint, Quaternion.identity);
-                        break;
-                    case 1:
-                        obj = PhotonNetwork.Instantiate("Winchester_Box", spawnPoint, Quaternion.identity);
-                        break;
-                    case 2:
-                        obj = PhotonNetwork.Instantiate("Speed_Box", spawnPoint, Quaternion.identity);
-                        break;
-                    case 3:
-                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
-                        break;
-                    default:
-                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
-                        break;
-                }
+                view.RPC("Spawn", RpcTarget.AllBufferedViaServer, randomIndex, spawnPoint);
                 spawnedObjects.Add(obj);
                 currentSpawnCount++;
             }
@@ -77,10 +62,34 @@ public class BoxSpawner : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void Spawn(int number, Vector2 Point)
+    {
+        switch (number)
+        {
+            case 0:
+                obj = PhotonNetwork.Instantiate("Thompson_Box", Point, Quaternion.identity);
+                break;
+            case 1:
+                obj = PhotonNetwork.Instantiate("Winchester_Box", Point, Quaternion.identity);
+                break;
+            case 2:
+                obj = PhotonNetwork.Instantiate("Speed_Box", Point, Quaternion.identity);
+                break;
+            case 3:
+                obj = PhotonNetwork.Instantiate("Health_Box", Point, Quaternion.identity);
+                break;
+            default:
+                obj = PhotonNetwork.Instantiate("Health_Box", Point, Quaternion.identity);
+                break;
+        }     
+        spawnedObjects.Add(obj);
+    }
+
     private void Update()
     {
         //удаляем объекты из списка спавнутых объектов, если они уничтожены
-        for (int i = spawnedObjects.Count - 1; i >= 0; i--)
+        for (int i = currentSpawnCount - 1; i >= 0; i--)
         {
             if (spawnedObjects[i] == null)
             {

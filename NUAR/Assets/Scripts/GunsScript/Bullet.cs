@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class Bullet : MonoBehaviour
 {
+    PhotonView view;
+
     public float speedBullet = 80f;
     public float lifetimeBullet;
     public float distance;
@@ -14,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        Invoke("DestroyBullet", lifetimeBullet);
+        view = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -24,7 +26,11 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
+        if (hitInfo.collider == null)
+        {
+            transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
+        }
+        
     }
 
     public void DestroyBullet()
@@ -34,14 +40,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("WallCollider"))
+        /*if(other.CompareTag("WallCollider"))
         {
-            DestroyBullet();
+            Destroy(gameObject);
         }
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && view.IsMine)
         {
+            player = other.gameObject.GetComponent<PlayerController>();
             DestroyBullet();
             player.ChangeHealth(5);
-        }
+        }*/
     }
 }

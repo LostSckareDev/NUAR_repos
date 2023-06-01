@@ -9,7 +9,6 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour
 {
     internal PhotonView view;
-    //public ChangeGunSprite GunSprite;
 
     public float speedPlayer;
     private Rigidbody2D Rigidbody;
@@ -49,14 +48,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-            healthText.text = health.ToString();
+            //healthText.text = health.ToString();
         if (view.IsMine)
         {
             moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
             moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
             transform.position += (Vector3)moveVelosity;
 
-            //healthText.text = health.ToString();
+            healthText.text = health.ToString();
 
             if (moveInput.x == 0)
             {
@@ -115,16 +114,19 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         {
-            if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 || other.CompareTag("HealthBox"))
+            if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 && !other.CompareTag("Bullet") || other.CompareTag("HealthBox"))
             {
-                if (view.IsMine)
-                    Destroy(other.gameObject);
+                /*if (view.IsMine)
+                    Destroy(other.gameObject);*/
                 PhotonNetwork.Destroy(other.gameObject);
             }
             if (view.IsMine)
             {
+                if (other.CompareTag("Bullet"))
+                    ChangeHealth(5);
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
+
                         IsThompson++;
                 }
 
