@@ -8,10 +8,8 @@ public class Bullet : MonoBehaviour
 {
     PhotonView view;
 
-    public float speedBullet = 80f;
-    public float lifetimeBullet;
+    public float speedBullet = 80f; 
     public float distance;
-    public int damage;
     public LayerMask whatIsSolid;
     private PlayerController player;
 
@@ -22,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
+        /*RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
         if (hitInfo.collider != null)
         {
             Destroy(gameObject);
@@ -30,13 +28,20 @@ public class Bullet : MonoBehaviour
         if (hitInfo.collider == null)
         {
             transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
-        }
-        
-    }
+        }*/
 
-    public void DestroyBullet()
-    {
-        PhotonNetwork.Destroy(gameObject);
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
+        if (hitInfo.collider == null)
+        {
+            transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
+        }
+        else
+        {
+            Destroy(gameObject);
+            //if (hitInfo.transform.gameObject == "Player (Clone)")
+            //.ChangeHealth(7);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

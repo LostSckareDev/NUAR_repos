@@ -10,8 +10,26 @@ public class SpawnPlayers : MonoBehaviour
     public GameObject Player;
     void Start()
     {
-        Vector2 randomPosition = new Vector2(Random.Range(-37f, 41f), Random.Range(-22f, 26f));
-        PhotonNetwork.Instantiate ("Player", randomPosition, Quaternion.identity);
+        while (true)
+        {
+            Vector2 spawnPosition = new Vector2(Random.Range(-36f, 40f), Random.Range(-21f, 25f));
+
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPosition, 1f);
+
+            bool canSpawn = true;
+
+            foreach (Collider2D col in colliders)
+            {
+                if (col.CompareTag("WallCollider") || col.CompareTag("Player"))
+                    canSpawn = false;
+            }
+
+            if (canSpawn)
+            {
+                PhotonNetwork.Instantiate ("Player", spawnPosition, Quaternion.identity);
+                break;
+            }
+        }
     }
 
 }

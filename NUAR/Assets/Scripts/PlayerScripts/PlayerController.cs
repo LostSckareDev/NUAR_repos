@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 spawnPoint = new Vector2(Random.Range(-37f, 41f), Random.Range(-22f, 26f));
 
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPoint, 0.5f);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPoint, 1f);
 
                 bool canSpawn = true;
 
                 foreach (Collider2D col in colliders)
                 {
-                    if (col.CompareTag("WallCollider") || col.CompareTag("ThompsonBox") || col.CompareTag("WinchesterBox") || col.CompareTag("SpeedBox") || col.CompareTag("HealthBox") || col.CompareTag("Player"))    
+                    if (col.CompareTag("WallCollider") || col.CompareTag("Player"))    
                         canSpawn = false;
                 }
 
@@ -140,18 +140,11 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         {
-            /*if(other.CompareTag("HealthBox"))
-                other.gameObject.SetActive(false);*/
-            /*if (IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1 && !other.CompareTag("Bullet") || other.CompareTag("HealthBox"))
-            {
-                *//*if (view.IsMine)
-                    Destroy(other.gameObject);*//*
-                PhotonNetwork.Destroy(other.gameObject);
-            }*/
+
             if (view.IsMine)
             {
                 if (other.CompareTag("Bullet"))
-                    ChangeHealth(5);
+                    ChangeHealth(7);
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
                         IsThompson++;

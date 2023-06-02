@@ -231,9 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedBullet: 80
-  lifetimeBullet: 1
   distance: 0.5
-  damage: 1
   whatIsSolid:
     serializedVersion: 2
     m_Bits: 128
@@ -292,7 +290,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.032343984, y: -0.06443459}
+  m_Offset: {x: -0.032343984, y: -0.051719487}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -303,5 +301,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.10581374, y: 0.40010464}
+  m_Size: {x: 0.10581374, y: 0.36337197}
   m_EdgeRadius: 0
