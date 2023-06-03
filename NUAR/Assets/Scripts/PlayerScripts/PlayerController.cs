@@ -103,11 +103,20 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        SyncNicknameRotation();
+        SyncNicknameRotation();
+        view.RPC("SyncNicknameRotation", RpcTarget.All);
+        
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
         pistol.Flip();
+    }
+
+    [PunRPC]
+    private void SyncNicknameRotation()
+    {
         textName.transform.Rotate(0f, 180f, 0f);
     }
 
@@ -150,7 +159,7 @@ public class PlayerController : MonoBehaviour
             if (view.IsMine)
             {
                 if (other.CompareTag("Bullet"))
-                    ChangeHealth(7);
+                    ChangeHealth(15);
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
                         IsThompson++;
