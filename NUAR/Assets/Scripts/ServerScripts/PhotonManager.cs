@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public InputField CreateIDField;
     public InputField FindIDField;
+    public InputField inputName;
+
+    void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+        inputName.text = PlayerPrefs.GetString("name");
+        PhotonNetwork.NickName = inputName.text;
+    }
 
     public void CreateRoom()
     {
@@ -23,5 +32,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Game");
+    }
+
+    public void SaveName()
+    {
+        PlayerPrefs.SetString("name", inputName.text);
+        PhotonNetwork.NickName = inputName.text;
     }
 }

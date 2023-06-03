@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     internal float bonusTimeStart = 10f;
     bool timerRunning = true;
     public Pistol pistol;
+
+    public Text textName;
     
     void Start()
     {
@@ -42,6 +44,9 @@ public class PlayerController : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         joystick = GameObject.FindGameObjectWithTag("JoystickWalk").GetComponent<Joystick>();
+
+        textName.text = view.Owner.NickName;
+        
         if(view.Owner.IsLocal)
             Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
     }
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour
         Scaler.x *= -1;
         transform.localScale = Scaler;
         pistol.Flip();
+        textName.transform.Rotate(0f, 180f, 0f);
     }
 
     public void ChangeHealth(int healthValue)
