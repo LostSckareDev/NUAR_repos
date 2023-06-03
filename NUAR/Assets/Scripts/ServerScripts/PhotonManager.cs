@@ -16,7 +16,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         inputName.text = PlayerPrefs.GetString("name");
         PhotonNetwork.NickName = inputName.text;
     }
-
+    
     public void CreateRoom()
     {
         RoomOptions roomOptions = new RoomOptions();
@@ -39,4 +39,5 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("name", inputName.text);
         PhotonNetwork.NickName = inputName.text;
     }
+    
 }
