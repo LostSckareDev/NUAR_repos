@@ -33,10 +33,14 @@ public class PlayerController : MonoBehaviour
     public Pistol pistol;
 
     public Text textName;
+
+    public ParticleSystem blood;
     
     void Start()
     {
         view = GetComponent<PhotonView>();
+
+        blood.Stop();
 
         healthText = GameObject.Find("TextHealth").GetComponent<TextMeshProUGUI>();
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -120,6 +124,12 @@ public class PlayerController : MonoBehaviour
         textName.transform.Rotate(0f, 180f, 0f);
     }
 
+    [PunRPC]
+    private void BloodSplash()
+    {
+        blood.Play();
+    }
+
     public void ChangeHealth(int healthValue)
     {
         health -= healthValue;
@@ -159,7 +169,13 @@ public class PlayerController : MonoBehaviour
             if (view.IsMine)
             {
                 if (other.CompareTag("Bullet"))
+                {
                     ChangeHealth(15);
+                    //blood.Play();
+                    BloodSplash();
+                    BloodSplash();
+                    view.RPC("BloodSplash", RpcTarget.All);
+                }
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
                         IsThompson++;

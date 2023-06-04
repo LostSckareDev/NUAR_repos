@@ -13,7 +13,7 @@ public class Pistol : MonoBehaviour
     public Transform shotPoint_W; //точка для Томпсона, из которой вылетает пуля
     private float timeBtwShots; //время перезарядки пистолета 
     private float startTimeBtwShots = 0.5f; //начальное время перезарядки пистолета
-    private float startTimeBtwShots_T = 0.1f; //начальное время перезарядки Томпсона
+    private float startTimeBtwShots_T = 0.15f; //начальное время перезарядки Томпсона
     private float startTimeBtwShots_W = 1f; //начальное время перезарядки Винчествера
     public PlayerController player; //скрипт игрока
     private float rotZ;
