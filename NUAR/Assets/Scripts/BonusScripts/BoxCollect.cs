@@ -6,16 +6,18 @@ using Photon.Realtime;
 
 public class BoxCollect : MonoBehaviour
 {
+    PhotonView view;
+
     void Start()
     {
-        
+        view = GetComponent<PhotonView>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && view.IsMine)
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

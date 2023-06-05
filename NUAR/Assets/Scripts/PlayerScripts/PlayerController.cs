@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     internal PhotonView view;
 
-    public float speedPlayer;
+    public float speedPlayer = 7f;
     private Rigidbody2D Rigidbody;
     private Vector2 moveInput;
     private Vector2 moveVelosity;
@@ -152,10 +152,11 @@ public class PlayerController : MonoBehaviour
                 if (canSpawn)
                 {
                     transform.position = spawnPoint;
-                    health = 100;
                     IsSpeed = 0;
                     IsThompson = 0;
                     IsWinchester = 0;
+                    speedPlayer = 7f;
+                    health = 100;
                     break;
                 }
             }

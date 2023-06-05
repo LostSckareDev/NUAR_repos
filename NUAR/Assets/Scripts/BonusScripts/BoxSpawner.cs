@@ -65,8 +65,27 @@ public class BoxSpawner : MonoBehaviour
             {
                 //спавним объект и добавляем его в список спавнутых объектов
                 int randomIndex = Random.Range(0, 4);
-                view.RPC("Spawn", RpcTarget.AllBufferedViaServer, randomIndex, spawnPoint);
+                //view.RPC("Spawn", RpcTarget.AllBufferedViaServer, randomIndex, spawnPoint);
                 currentSpawnCount++;
+                switch (randomIndex)
+                {
+                    case 0:
+                        obj = PhotonNetwork.Instantiate("Thompson_Box", spawnPoint, Quaternion.identity);
+                        break;
+                    case 1:
+                        obj = PhotonNetwork.Instantiate("Winchester_Box", spawnPoint, Quaternion.identity);
+                        break;
+                    case 2:
+                        obj = PhotonNetwork.Instantiate("Speed_Box", spawnPoint, Quaternion.identity);
+                        break;
+                    case 3:
+                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
+                        break;
+                    default:
+                        obj = PhotonNetwork.Instantiate("Health_Box", spawnPoint, Quaternion.identity);
+                        break;
+                }
+                spawnedObjects.Add(obj);
             }
 
             //ждём заданную задержку перед следующим спавном
@@ -74,7 +93,7 @@ public class BoxSpawner : MonoBehaviour
         }
     }
 
-    [PunRPC]
+    /*[PunRPC]
     public void Spawn(int number, Vector2 Point)
     {
         switch (number)
@@ -96,7 +115,7 @@ public class BoxSpawner : MonoBehaviour
                 break;
         }     
         spawnedObjects.Add(obj);
-    }
+    }*/
 
     private void Update()
     {

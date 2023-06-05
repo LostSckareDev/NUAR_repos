@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 {
     PhotonView view;
 
-    public float speedBullet = 80f; 
+    public float speedBullet = 55f; 
     public float distance;
     public LayerMask whatIsSolid;
     private PlayerController player;
@@ -37,7 +37,9 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            if (view.IsMine)
+            PhotonNetwork.Destroy(gameObject);
             //if (hitInfo.transform.gameObject == "Player (Clone)")
             //.ChangeHealth(7);
         }

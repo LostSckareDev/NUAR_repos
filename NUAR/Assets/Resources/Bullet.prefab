@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fbaba431adb69040ab3ec0b6f76ae7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBullet: 80
+  speedBullet: 50
   distance: 0.5
   whatIsSolid:
     serializedVersion: 2
@@ -250,7 +250,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:

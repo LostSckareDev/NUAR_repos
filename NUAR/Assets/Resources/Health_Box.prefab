@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7183136519745948099}
   - component: {fileID: -2723074872724896029}
   - component: {fileID: 138840921449214364}
+  - component: {fileID: 4321128505235938508}
   m_Layer: 0
   m_Name: Health_Box
   m_TagString: HealthBox
@@ -161,8 +162,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2526639596642871660}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96bebdd9d1d065547b07e924e2942cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4321128505235938508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2526639596642871660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1690a63100c1b464688ed37bc5e3e8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
