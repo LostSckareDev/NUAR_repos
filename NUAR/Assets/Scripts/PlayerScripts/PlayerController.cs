@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeHealth(int healthValue)
     {
+
         health -= healthValue;
         if (health <= 0)
         {
@@ -171,7 +172,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (other.CompareTag("Bullet"))
                 {
-                    ChangeHealth(15);
+                    if (health > 0)
+                        ChangeHealth(15);
                     //blood.Play();
                     BloodSplash();
                     BloodSplash();
@@ -198,9 +200,9 @@ public class PlayerController : MonoBehaviour
                 else if (other.CompareTag("HealthBox"))
                 {
                     {
-                        if ((health + 20) < healthFull)
+                        if ((health + 40) < healthFull)
                         {
-                            health += 20;
+                            health += 40;
                         }
                         else
                         {
