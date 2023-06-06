@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 {
     PhotonView view;
 
-    public float speedBullet = 55f; 
+    public float speedBullet = 50f; 
     public float distance;
     public LayerMask whatIsSolid;
     private PlayerController player;

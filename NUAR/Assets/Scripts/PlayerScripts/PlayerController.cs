@@ -107,8 +107,6 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
-        SyncNicknameRotation();
-        SyncNicknameRotation();
         view.RPC("SyncNicknameRotation", RpcTarget.All);
         
         facingRight = !facingRight;
@@ -173,8 +171,8 @@ public class PlayerController : MonoBehaviour
                 {
                     ChangeHealth(15);
                     //blood.Play();
-                    BloodSplash();
-                    BloodSplash();
+                    //BloodSplash();
+                    //BloodSplash();
                     view.RPC("BloodSplash", RpcTarget.All);
                 }
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
@@ -198,9 +196,9 @@ public class PlayerController : MonoBehaviour
                 else if (other.CompareTag("HealthBox"))
                 {
                     {
-                        if ((health + 20) < healthFull)
+                        if ((health + 40) < healthFull)
                         {
-                            health += 20;
+                            health += 40;
                         }
                         else
                         {

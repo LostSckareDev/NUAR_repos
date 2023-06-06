@@ -12,7 +12,6 @@ public class ChangeGunSprite : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public PlayerController player;
     public string Gun;
-    internal float bonusTimeStart = 10f;
     bool timerRunning = true;
     internal PhotonView view;
 
@@ -32,13 +31,13 @@ public class ChangeGunSprite : MonoBehaviour
                     view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
                 if (timerRunning == true)
                 {
-                    bonusTimeStart -= Time.deltaTime;
+                    player.bonusTimeStart -= Time.deltaTime;
                 }
-                if (bonusTimeStart < 0)
+                if (player.bonusTimeStart < 0)
                 {
                     Gun = "P";
                     player.IsThompson = 0;
-                    bonusTimeStart = 10f;
+                    player.bonusTimeStart = 10f;
                     view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
                 }
             }
@@ -52,13 +51,13 @@ public class ChangeGunSprite : MonoBehaviour
                 }
                 if (timerRunning == true)
                 {
-                    bonusTimeStart -= Time.deltaTime;
+                    player.bonusTimeStart -= Time.deltaTime;
                 }
-                if (bonusTimeStart < 0)
+                if (player.bonusTimeStart < 0)
                 {
                     Gun = "P";
                     player.IsWinchester = 0;
-                    bonusTimeStart = 10f;
+                    player.bonusTimeStart = 10f;
                     view.RPC("ChangeSprite", RpcTarget.AllBufferedViaServer, Gun);
                 }
             }
