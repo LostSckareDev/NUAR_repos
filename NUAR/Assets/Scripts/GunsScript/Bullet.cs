@@ -12,10 +12,14 @@ public class Bullet : MonoBehaviour
     public float distance;
     public LayerMask whatIsSolid;
     private PlayerController player;
+    private PlayerController killer;
+    private bool hit = false;
+    public int ownerNumber;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        ownerNumber = view.ViewID/1000 + 1;
     }
 
     private void Update()
@@ -29,7 +33,8 @@ public class Bullet : MonoBehaviour
         {
             transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
         }*/
-
+        if (hit)
+            return;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
         if (hitInfo.collider == null)
         {
@@ -37,11 +42,21 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            //Destroy(gameObject);
+            hit = true;
+
             if (view.IsMine)
-            PhotonNetwork.Destroy(gameObject);
-            //if (hitInfo.transform.gameObject == "Player (Clone)")
-            //.ChangeHealth(7);
+                PhotonNetwork.Destroy(gameObject);
+
+            if (hitInfo.transform.gameObject.name == "Player(Clone)")
+            {
+                player = hitInfo.transform.gameObject.GetComponent<PlayerController>();
+                if (player.ChangeHealth(15) == true)
+                {
+                    killer = PhotonView.Find(ownerNumber).GetComponent<PlayerController>();
+                    killer.kills++;
+                }
+                player.ChangeHealth(15);
+            }
         }
 
     }

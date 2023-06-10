@@ -6,7 +6,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable
 {
     internal PhotonView view;
 
@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     bool timerRunning = true;
     public Pistol pistol;
 
+    private int deaths = 0;
+    public int kills = 0;
+
     public Text textName;
 
     public ParticleSystem blood;
@@ -55,6 +58,18 @@ public class PlayerController : MonoBehaviour
             Camera.main.GetComponent<CameraFollow>().player = gameObject.transform;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+        }
+        else
+        {
+            health = (int) stream.ReceiveNext();
+        }
+    }
+
     void Update()
     {
         if (view.IsMine)
@@ -62,6 +77,9 @@ public class PlayerController : MonoBehaviour
             moveInput = new Vector2(joystick.Horizontal, joystick.Vertical);
             moveVelosity = moveInput.normalized * speedPlayer * Time.deltaTime;
             transform.position += (Vector3)moveVelosity;
+
+            //deathsText.text = deaths.ToString(); сюда смерти
+            //killsText.text = kills.ToString(); сюда убийства
 
             healthText.text = health.ToString();
 
@@ -128,11 +146,16 @@ public class PlayerController : MonoBehaviour
         blood.Play();
     }
 
-    public void ChangeHealth(int healthValue)
+    public bool ChangeHealth(int healthValue)
     {
-        health -= healthValue;
+        if (view.IsMine)
+        {
+            health -= healthValue;
+            view.RPC("BloodSplash", RpcTarget.All);
+        }
         if (health <= 0)
         {
+            deaths++;
             while (true)
             {
                 Vector2 spawnPoint = new Vector2(Random.Range(-37f, 41f), Random.Range(-22f, 26f));
@@ -143,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
                 foreach (Collider2D col in colliders)
                 {
-                    if (col.CompareTag("WallCollider") || col.CompareTag("Player"))    
+                    if (col.CompareTag("WallCollider") || col.CompareTag("Player"))
                         canSpawn = false;
                 }
 
@@ -158,7 +181,10 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
             }
+            return true;
         }
+        else
+            return false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -167,14 +193,14 @@ public class PlayerController : MonoBehaviour
 
             if (view.IsMine)
             {
-                if (other.CompareTag("Bullet"))
+                /*if (other.CompareTag("Bullet"))
                 {
                     ChangeHealth(15);
                     //blood.Play();
                     //BloodSplash();
                     //BloodSplash();
                     view.RPC("BloodSplash", RpcTarget.All);
-                }
+                }*/
                 if (other.CompareTag("ThompsonBox") && IsSpeed != 1 && IsWinchester != 1 && IsThompson != 1)
                 {
                         IsThompson++;
