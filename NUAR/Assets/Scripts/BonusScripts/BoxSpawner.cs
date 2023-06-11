@@ -9,12 +9,6 @@ public class BoxSpawner : MonoBehaviour
     PhotonView view;
     public float spawnDelay = 3.5f;       //задержка между спавнами
     public int maxSpawnCount = 10;      //максимальное количество объектов на сцене
-    public float spawnAreaWidth = 10f;  //ширина прямоугольной зоны спавна
-    public float spawnAreaHeight = 10f; //высота прямоугольной зоны спавна
-    public GameObject HealthBox;
-    public GameObject ThompsonBox;
-    public GameObject WinchesterBox;
-    public GameObject SpeedBox;
 
     GameObject obj;
     private int currentSpawnCount = 0;  //текущее количество объектов на сцене

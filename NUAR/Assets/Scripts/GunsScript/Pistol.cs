@@ -7,7 +7,6 @@ using Photon.Realtime;
 public class Pistol : MonoBehaviour
 {
     public float offset;
-    public GameObject bullet; //объект пули
     public Transform shotPoint; //точка для пистолета, из которой вылетает пуля
     public Transform shotPoint_T; //точка для Томпсона, из которой вылетает пуля
     public Transform shotPoint_W; //точка для Томпсона, из которой вылетает пуля
@@ -101,10 +100,10 @@ public class Pistol : MonoBehaviour
         else if(player.IsThompson == 0 && player.IsWinchester == 1)
         {
             
-            int WinBull = 5; 
+            int WinBull = 4; 
             while(WinBull > 0)
             {
-                float angle = 20f;
+                float angle = 15f;
                 float randomAngle = Random.Range(-angle, angle);
                 Quaternion bulletRotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + randomAngle);
 

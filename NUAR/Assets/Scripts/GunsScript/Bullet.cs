@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     public float distance;
     public LayerMask whatIsSolid;
     private PlayerController player;
+    bool hit = false;
 
     private void Start()
     {
@@ -29,7 +30,8 @@ public class Bullet : MonoBehaviour
         {
             transform.Translate(Vector2.up * speedBullet * Time.deltaTime);
         }*/
-
+        if (hit)
+            return;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
         if (hitInfo.collider == null)
         {
@@ -37,6 +39,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
+            hit = true;
             //Destroy(gameObject);
             if (view.IsMine)
             PhotonNetwork.Destroy(gameObject);
