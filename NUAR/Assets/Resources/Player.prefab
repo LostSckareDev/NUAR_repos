@@ -653,7 +653,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: -90
-  bullet: {fileID: 976344046391568718, guid: 20ebbf6686fff6045a21b68ac90639cc, type: 3}
   shotPoint: {fileID: 5735327250522017947}
   shotPoint_T: {fileID: 1947870363073899089}
   shotPoint_W: {fileID: 1205899254173733934}
